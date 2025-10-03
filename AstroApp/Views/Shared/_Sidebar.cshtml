@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroBase</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" />
+
+    <!-- Boxicons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/css/sidebar/sidebar.css">
+    <link rel="stylesheet" href="~/css/carousel.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+
+<body id="body-pd">
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header_toggle">
+            <i class='bx bx-menu' id="header-toggle"></i>
+        </div>
+
+        <!-- Dark Mode Toggle -->
+        <div class="dark-mode-toggle" style="margin-right: 1rem; cursor: pointer;">
+            <i class='bx bx-moon' id="darkModeBtn"></i>
+        </div>
+
+        <!-- User Dropdown -->
+        <div class="btn-group" style="width: 60px">
+            <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://res.cloudinary.com/dpjpz26qm/image/upload/v1674890312/codepen/avatar/man_1_cpqkhl.png" class="img-fluid" alt="" style="width: 35px;">
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#"><i class='bx bx-user-circle'></i> Account</a></li>
+                <li><a class="dropdown-item" href="#"><i class='bx bxs-widget'></i> Settings</a></li>
+                <li><a class="dropdown-item" href="#"><i class='bx bx-exit'></i> Logout</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div>
+                <a href="#" class="nav_logo">
+                    <i class='bx bx-planet nav_logo-icon'></i>
+                    <span class="nav_logo-name">AstroBase</span>
+                </a>
+                <div class="nav_list">
+                    <a href="@Url.Action("Index", "Dashboard")" class="nav_link active">
+                        <i class='bx bx-grid-alt nav_icon'></i>
+                        <span class="nav_name">Dashboard</span>
+                    </a>
+                    <a href="@Url.Action("Manage", "Client")" class="nav_link">
+                        <i class='bx bx-user nav_icon'></i>
+                        <span class="nav_name">Clients</span>
+                    </a>
+                    <a href="@Url.Action("Manage", "Schedule")" class="nav_link">
+                        <i class='bx bx-message-square-detail nav_icon'></i>
+                        <span class="nav_name">Schedule</span>
+                    </a>
+                    <a href="@Url.Action("Index", "Bookmark")" class="nav_link">
+                        <i class='bx bx-bookmark nav_icon'></i>
+                        <span class="nav_name">Bookmark</span>
+                    </a>
+                    <a href="@Url.Action("Index", "Files")" class="nav_link">
+                        <i class='bx bx-folder nav_icon'></i>
+                        <span class="nav_name">Files</span>
+                    </a>
+                    <a href="@Url.Action("Index", "Stats")" class="nav_link">
+                        <i class='bx bx-bar-chart-alt-2 nav_icon'></i>
+                        <span class="nav_name">Stats</span>
+                    </a>
+                </div>
+            </div>
+            <a href="#" class="nav_link">
+                <i class='bx bx-log-out nav_icon'></i>
+                <span class="nav_name">SignOut</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="height-100 bg-light mainslider">
+        @RenderBody()
+    </div>
+
+    <footer>
+        <p>
+            Copyright &copy;
+            <script>
+                document.write(new Date().getFullYear());
+            </script> All Rights Reserved.
+        </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"></script>
+    <script src="~/js/main.js"></script>
+
+    <!-- Owl Carousel Init -->
+    <script>
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            dots: false,
+            nav: true,
+            autoplay: true,
+            responsive: {
+                0: { items: 1 },
+                600: { items: 1 },
+                1000: { items: 1 }
+            }
+        });
+    </script>
+
+    <!-- Dark Mode JS -->
+    <script>
+        const darkModeBtn = document.getElementById('darkModeBtn');
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if(savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+            darkModeBtn.classList.replace('bx-moon', 'bx-sun');
+        }
+
+        darkModeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+
+            if(document.body.classList.contains('light-mode')){
+                darkModeBtn.classList.replace('bx-moon', 'bx-sun');
+                localStorage.setItem('theme', 'light');
+            } else {
+                darkModeBtn.classList.replace('bx-sun', 'bx-moon');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+
+</body>
+</html>

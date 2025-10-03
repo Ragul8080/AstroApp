@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="dashboard-container">
+    <!-- Top Navbar -->
+        
+    <!-- Dashboard Header -->
+    <div class="container-fluid mt-4">
+        <h2 class="dashboard-title">Dashboard</h2>
+        <p class="dashboard-subtitle">Welcome back! Here’s your celestial overview.</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="container-fluid mt-4">
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h6>Total Clients</h6><h2>48</h2><small class="text-success">+12% from last month</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h6>Today’s Appointments</h6><h2>6</h2><small class="text-info">3 upcoming next 4 hours</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h6>This Month Revenue</h6><h2>$4,280</h2><small class="text-success">+18% from last month</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h6>Avg Session Time</h6><h2>45 min</h2><small class="text-info">+5 min from last month</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule -->
+    <div class="container-fluid mt-5">
+        <div class="schedule-card">
+            <h5 class="mb-4">Today’s Schedule</h5>
+            <div class="schedule-item">
+                <div class="icon">♈</div>
+                <div><strong>Sarah Johnson</strong><p>Birth Chart Reading</p></div>
+                <span class="time">2:00 PM</span>
+            </div>
+            <div class="schedule-item">
+                <div class="icon">♉</div>
+                <div><strong>Michael Chen</strong><p>Compatibility</p></div>
+                <span class="time">3:30 PM</span>
+            </div>
+            <div class="schedule-item">
+                <div class="icon">♊</div>
+                <div><strong>Emma Wilson</strong><p>Career Guidance</p></div>
+                <span class="time">5:00 PM</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="container-fluid mt-4">
+        <div class="row g-3">
+            <div class="col-md-4"><div class="action-card">Add New Client</div></div>
+            <div class="col-md-4"><div class="action-card">Schedule Appointment</div></div>
+            <div class="col-md-4"><div class="action-card">View Reports</div></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer mt-5">
+        <p>© @DateTime.Now.Year Astro CMS – Celestial Client Management System</p>
+    </footer>
+</div>

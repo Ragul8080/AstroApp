@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Clients";
+}
+
+<input type="hidden" id="clientUrl" value="@Url.Action("GetClients", "ScheduleApi")" />
+
+<div class="container-fluid clients-page">
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-12">
+            <h1 class="page-title">Clients</h1>
+            <p class="page-subtitle">Manage your celestial clientele</p>
+        </div>
+    </div>
+
+    <!-- Search and Add Button -->
+    <div class="row align-items-center mb-4">
+        @* <div class="col-md-8">
+            <div class="search-box">
+                <input type="text" class="form-control search-input" placeholder="Search by name or zodiac sign...">
+            </div>
+        </div> *@
+        <div class="col-md-4 text-end">
+            <button class="purpulbtn" id="CreateUser">
+                <i class="bi bi-plus-lg"></i> Add New Client
+            </button>
+        </div>
+
+
+    </div>
+
+    <!-- DataTable -->
+    <div class="row">
+        <div class="col-12">
+            <table id="clientTable" class="" style="width:100%">
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Styles Section -->
+@section Styles {
+    <link href="~/css/Client/manage.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+}
+
+<!-- Scripts Section -->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var clientUrl = $('#clientUrl').val();
+
+            var table = $('#clientTable').DataTable({
+                ajax: {
+                    url: clientUrl,
+                    type: 'GET',
+                    dataSrc: ''
+                },
+                      columns: [
+            { data: 'firstName', title: 'First Name' },
+            { data: 'lastName', title: 'Last Name' },
+            { data: 'email', title: 'Email' },
+            { data: 'phone', title: 'Phone' },
+            { data: 'gender', title: 'Gender' },
+            { data: 'zodiacSign', title: 'Zodiac Sign' },
+            {
+                data: 'birthDate',
+                title: 'Birth Date',
+                render: function (data) {
+                    return new Date(data).toLocaleDateString();
+                }
+            },
+            {
+                data: null,
+                title: 'Actions',
+                render: function (data, type, row) {
+                    return `
+                        <button class="btn btn-sm btn-primary edit-btn" data-id="${row.id}">Edit</button>
+                        <button class="btn btn-sm btn-danger delete-btn" data-id="${row.id}">Delete</button>
+                    `;
+                }
+            }
+        ]
+            });
+
+            // Search input
+            $('.search-input').on('keyup', function () {
+                table.search(this.value).draw();
+            });
+
+            // Add New Client Button Click
+            $('#CreateUser').on('click', function () {
+                // Open your modal or redirect to create page
+                alert('Add New Client button clicked!');
+            });
+
+            // Edit Button Click
+            $('#clientTable tbody').on('click', '.edit-btn', function () {
+                var id = $(this).data('id');
+                alert('Edit Client ID: ' + id);
+            });
+
+            // Delete Button Click
+            $('#clientTable tbody').on('click', '.delete-btn', function () {
+                var id = $(this).data('id');
+                alert('Delete Client ID: ' + id);
+            });
+        });
+    </script>
+}

@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+:root {
+    --header-height: 3rem;
+    --nav-width: 68px;
+    --body-font: "Nunito", sans-serif;
+    --normal-font-size: 1rem;
+    /* Dark mode (default) */
+    --bg-gradient: linear-gradient(to bottom right, #0a0a1f, #1a1a2e);
+    --text-color: #e5e5f7;
+    --header-bg: linear-gradient(#0a0a1f);
+    --nav-bg: linear-gradient(#0a0a1f);
+    --link-color: #afa5d9;
+    --link-hover-color: #fff;
+    --btn-bg: #7c3aed;
+    --btn-hover-bg: #6d28d9;
+}
+
+body.light-mode {
+    --bg-gradient: linear-gradient(to bottom right, #f5f5f5, #ffffff);
+    --text-color: #1a1a1a;
+    --header-bg: linear-gradient(#ffffff);
+    --nav-bg: linear-gradient(#f5f5f5);
+    --link-color: #555555;
+    --link-hover-color: #000;
+    --btn-bg: #6366f1;
+    --btn-hover-bg: #4f46e5;
+}
+
+body {
+    margin: 0;
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    background: var(--bg-gradient);
+    color: var(--text-color);
+    transition: all 0.5s ease;
+}
+
+a {
+    text-decoration: none;
+}
+
+footer {
+    background: var(--nav-bg);
+    color: var(--text-color);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.purpulbtn, .btn-add-client {
+    background-color: var(--btn-bg);
+    color: #fff;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 10px 20px;
+    border: none;
+    transition: 0.3s ease;
+}
+
+    .purpulbtn:hover, .btn-add-client:hover {
+        background-color: var(--btn-hover-bg);
+    }

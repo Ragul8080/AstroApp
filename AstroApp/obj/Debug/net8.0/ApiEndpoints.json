@@ -1,0 +1,54 @@
+[
+  {
+    "ContainingType": "AstroApp.ApiControllers.ClientsApiController",
+    "Method": "GetClients",
+    "RelativePath": "api/ClientsApi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AstroApp.ApiControllers.ClientsApiController",
+    "Method": "GetClient",
+    "RelativePath": "api/ClientsApi/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AstroApp.ApiControllers.ScheduleApiController",
+    "Method": "GetClients",
+    "RelativePath": "api/ScheduleApi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AstroApp.ApiControllers.ScheduleApiController",
+    "Method": "GetClient",
+    "RelativePath": "api/ScheduleApi/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

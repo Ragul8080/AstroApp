@@ -1,0 +1,27 @@
+﻿.mainslider .item {
+    height: 100vh;
+    position: relative;
+}
+
+    .mainslider .item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .mainslider .item .cover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.5s;
+    }
+
+body.light-mode .mainslider .item .cover {
+    background: rgba(255, 255, 255, 0.4);
+}
