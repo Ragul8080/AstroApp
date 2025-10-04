@@ -1,32 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
 
+/* ============================= */
+/*       ROOT VARIABLES          */
+/* ============================= */
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
     --body-font: "Nunito", sans-serif;
     --normal-font-size: 1rem;
-    /* Dark mode (default) */
-    --bg-gradient: linear-gradient(to bottom right, #0a0a1f, #1a1a2e);
-    --text-color: #e5e5f7;
-    --header-bg: linear-gradient(#0a0a1f);
-    --nav-bg: linear-gradient(#0a0a1f);
-    --link-color: #afa5d9;
-    --link-hover-color: #fff;
-    --btn-bg: #7c3aed;
-    --btn-hover-bg: #6d28d9;
-}
-
-body.light-mode {
+    /* Light Mode Variables */
     --bg-gradient: linear-gradient(to bottom right, #f5f5f5, #ffffff);
     --text-color: #1a1a1a;
-    --header-bg: linear-gradient(#ffffff);
-    --nav-bg: linear-gradient(#f5f5f5);
+    --header-bg: #ffffff;
+    --nav-bg: #f5f5f5;
     --link-color: #555555;
-    --link-hover-color: #000;
+    --link-hover-color: #000000;
     --btn-bg: #6366f1;
     --btn-hover-bg: #4f46e5;
+    --card-bg: #ffffff;
+    --accent-color: #6366f1;
 }
 
+/* ============================= */
+/*       GLOBAL ELEMENTS         */
+/* ============================= */
 body {
     margin: 0;
     font-family: var(--body-font);
@@ -38,7 +35,13 @@ body {
 
 a {
     text-decoration: none;
+    color: var(--link-color);
+    transition: color 0.3s;
 }
+
+    a:hover {
+        color: var(--link-hover-color);
+    }
 
 footer {
     background: var(--nav-bg);
@@ -47,12 +50,15 @@ footer {
     text-align: center;
 }
 
+/* ============================= */
+/*       BUTTON STYLES           */
+/* ============================= */
 .purpulbtn, .btn-add-client {
     background-color: var(--btn-bg);
     color: #fff;
     font-weight: 500;
     border-radius: 10px;
-    padding: 10px 20px;
+    padding: 8px 17px;
     border: none;
     transition: 0.3s ease;
 }
@@ -60,3 +66,417 @@ footer {
     .purpulbtn:hover, .btn-add-client:hover {
         background-color: var(--btn-hover-bg);
     }
+
+/* ============================= */
+/*       HEADER & SIDEBAR        */
+/* ============================= */
+.header {
+    width: 100%;
+    height: var(--header-height);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    background: var(--header-bg);
+    color: var(--text-color);
+    z-index: 100;
+    transition: 0.5s;
+}
+
+.header_toggle {
+    color: var(--link-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+    .header_toggle:hover {
+        color: var(--link-hover-color);
+    }
+
+.header_img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+    .header_img img {
+        width: 40px;
+    }
+
+.l-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--nav-width);
+    height: 100vh;
+    background: var(--nav-bg);
+    color: var(--text-color);
+    padding: 0.5rem 1rem 0 0;
+    transition: 0.5s;
+    z-index: 100;
+}
+
+.nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.nav_logo, .nav_link {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    column-gap: 1rem;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+}
+
+.nav_logo {
+    margin-bottom: 2rem;
+}
+
+.nav_logo-icon, .nav_icon {
+    font-size: 1.25rem;
+    color: var(--link-color);
+}
+
+.nav_link {
+    position: relative;
+    color: var(--link-color);
+    margin-bottom: 1.5rem;
+}
+
+    .nav_link:hover, .active {
+        color: var(--link-hover-color);
+    }
+
+        .active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 2px;
+            height: 32px;
+            background-color: var(--link-hover-color);
+        }
+
+.body-pd {
+    padding-left: calc(var(--nav-width) + 1rem);
+}
+
+/* Responsive layout */
+@media screen and (min-width: 768px) {
+    body {
+        margin: calc(var(--header-height) + 1rem) 0 0 0;
+        padding-left: calc(var(--nav-width) + 2rem);
+    }
+
+    .header {
+        height: calc(var(--header-height) + 1rem);
+        padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
+    }
+
+    .header_img {
+        width: 40px;
+        height: 40px;
+    }
+
+        .header_img img {
+            width: 45px;
+        }
+
+    .l-navbar {
+        left: 0;
+        padding: 1rem 1rem 0 0;
+    }
+
+    .body-pd {
+        padding-left: calc(var(--nav-width) + 188px);
+    }
+}
+
+/* ============================= */
+/*       CLIENTS PAGE STYLES     */
+/* ============================= */
+.clients-page {
+    padding: 30px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.search-box .search-input {
+    background-color: var(--card-bg);
+    border: 1px solid #ccc;
+    color: var(--text-color);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.client-card {
+    background-color: var(--card-bg);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .client-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+.client-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.client-info h5 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.client-info p {
+    margin: 2px 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+/* ============================= */
+/*       ROOT VARIABLES          */
+/* ============================= */
+:root {
+    --header-height: 3rem;
+    --nav-width: 68px;
+    --body-font: "Nunito", sans-serif;
+    --normal-font-size: 1rem;
+    /* Light Mode Variables */
+    --bg-gradient: linear-gradient(to bottom right, #f5f5f5, #ffffff);
+    --text-color: #1a1a1a;
+    --header-bg: #ffffff;
+    --nav-bg: #f5f5f5;
+    --link-color: #555555;
+    --link-hover-color: #000000;
+    --btn-bg: #6366f1;
+    --btn-hover-bg: #4f46e5;
+    --card-bg: #ffffff;
+    --accent-color: #6366f1;
+}
+
+/* ============================= */
+/*       GLOBAL ELEMENTS         */
+/* ============================= */
+body {
+    margin: 0;
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    background: var(--bg-gradient);
+    color: var(--text-color);
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+a {
+    text-decoration: none;
+    color: var(--link-color);
+    transition: color 0.3s;
+}
+
+    a:hover {
+        color: var(--link-hover-color);
+    }
+
+/* ============================= */
+/*       HEADER & SIDEBAR        */
+/* ============================= */
+.header {
+    width: 100%;
+    height: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    background: var(--header-bg);
+    color: var(--text-color);
+    z-index: 100;
+    transition: 0.5s;
+}
+.header_tittle {
+    font-family: 'Nunito', sans-serif; /* Stylish font */
+    font-size: 1.8rem; /* Bigger title */
+    font-weight: 300; /* Bold */
+    color: #1E90FF; /* Blue color */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Slight shadow for depth */
+    margin: 0;
+    transition: all 0.3s ease;
+}
+    .header_tittle p:hover {
+        color: #00BFFF; /* Lighter blue on hover */
+        transform: scale(1.05); /* Slight grow effect */
+    }
+.header_toggle {
+    color: var(--link-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+    .header_toggle:hover {
+        color: var(--link-hover-color);
+    }
+
+.header_img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+    .header_img img {
+        width: 20px;
+    }
+
+/* Sidebar hidden by default on mobile */
+.l-navbar {
+    position: fixed;
+    top: 0;
+    left: -250px; /* hidden */
+    width: 68px; /* collapsed width */
+    height: 100vh;
+    background-color: var(--nav-bg);
+    transition: left 0.5s;
+    z-index: 100;
+}
+
+    /* Show sidebar */
+    .l-navbar.show {
+        left: 0;
+    }
+
+/* Body padding when sidebar is open */
+.body-pd {
+    padding-left: calc(var(--nav-width) + 1rem);
+}
+
+
+.nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.nav_logo, .nav_link {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    column-gap: 1rem;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+}
+
+.nav_logo {
+    margin-bottom: 2rem;
+}
+
+.nav_logo-icon, .nav_icon {
+    font-size: 1.25rem;
+    color: var(--link-color);
+}
+
+.nav_link {
+    position: relative;
+    color: var(--link-color);
+    margin-bottom: 1.5rem;
+    transition: 0.3s;
+}
+
+    .nav_link:hover, .nav_link.active {
+        color: var(--link-hover-color);
+    }
+
+        .nav_link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 2px;
+            height: 32px;
+            background-color: var(--link-hover-color);
+        }
+
+/* ============================= */
+/*       CONTENT PADDING         */
+/* ============================= */
+.body-pd {
+    padding-left: calc(var(--nav-width) + 1rem);
+}
+
+/* Responsive layout */
+@media screen and (min-width: 768px) {
+    body {
+        margin-top :0;
+        padding-left: calc(var(--nav-width) + 2rem);
+    }
+
+    .header {
+        height: calc(var(--header-height) + 1rem);
+        padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
+    }
+
+    .header_img {
+        width: 40px;
+        height: 40px;
+    }
+
+        .header_img img {
+            width: 45px;
+        }
+
+    .l-navbar {
+        left: 0;
+        padding: 1rem 1rem 0 0;
+    }
+
+    .body-pd {
+        padding-left: calc(var(--nav-width) + 188px);
+    }
+}
+
+
+.zodiac {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent-color);
+    margin-left: 8px;
+}
+
+.last-visit {
+    display: block;
+    margin-top: 8px;
+    color: #6366f1;
+}

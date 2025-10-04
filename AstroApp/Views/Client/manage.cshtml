@@ -3,23 +3,17 @@
 }
 
 <input type="hidden" id="clientUrl" value="@Url.Action("GetClients", "ScheduleApi")" />
+<input type="hidden" id="createUrl" value="@Url.Action("CreateUser", "Client")" />
 
 <div class="container-fluid clients-page">
-    <!-- Page Header -->
-    <div class="row">
-        <div class="col-12">
-            <h1 class="page-title">Clients</h1>
-            <p class="page-subtitle">Manage your celestial clientele</p>
-        </div>
-    </div>
 
     <!-- Search and Add Button -->
     <div class="row align-items-center mb-4">
-        @* <div class="col-md-8">
+        <div class="col-md-8">
             <div class="search-box">
-                <input type="text" class="form-control search-input" placeholder="Search by name or zodiac sign...">
+                <h1 class="page-title">Clients</h1>
             </div>
-        </div> *@
+        </div>
         <div class="col-md-4 text-end">
             <button class="purpulbtn" id="CreateUser">
                 <i class="bi bi-plus-lg"></i> Add New Client
@@ -32,7 +26,7 @@
     <!-- DataTable -->
     <div class="row">
         <div class="col-12">
-            <table id="clientTable" class="" style="width:100%">
+            <table id="clientTable" class="table table-striped table-bordered table-hover" style="width:100%">
             </table>
         </div>
     </div>
@@ -40,7 +34,6 @@
 
 <!-- Styles Section -->
 @section Styles {
-    <link href="~/css/Client/manage.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 }
@@ -65,15 +58,7 @@
             { data: 'lastName', title: 'Last Name' },
             { data: 'email', title: 'Email' },
             { data: 'phone', title: 'Phone' },
-            { data: 'gender', title: 'Gender' },
             { data: 'zodiacSign', title: 'Zodiac Sign' },
-            {
-                data: 'birthDate',
-                title: 'Birth Date',
-                render: function (data) {
-                    return new Date(data).toLocaleDateString();
-                }
-            },
             {
                 data: null,
                 title: 'Actions',
@@ -84,7 +69,10 @@
                     `;
                 }
             }
-        ]
+        ],
+                 pageLength: 25, // Show 25 rows by default
+                 lengthMenu: [ [10, 25, 50, 100], [10, 25, 50, 100] ], // Optional: dropdown options
+                responsive: true
             });
 
             // Search input
@@ -95,7 +83,7 @@
             // Add New Client Button Click
             $('#CreateUser').on('click', function () {
                 // Open your modal or redirect to create page
-                alert('Add New Client button clicked!');
+                 window.location.href = $("#createUrl").val();
             });
 
             // Edit Button Click
