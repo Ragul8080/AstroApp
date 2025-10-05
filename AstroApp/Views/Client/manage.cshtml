@@ -2,8 +2,10 @@
     ViewData["Title"] = "Clients";
 }
 
-<input type="hidden" id="clientUrl" value="@Url.Action("GetClients", "ScheduleApi")" />
+<input type="hidden" id="clientUrl" value="@Url.Action("GetClients", "ClientsApi")" />
 <input type="hidden" id="createUrl" value="@Url.Action("CreateUser", "Client")" />
+<input type="hidden" id="editUrl" value="@Url.Action("EditUser", "Client")" />
+<input type="hidden" id="deleteUrl" value="@Url.Action("Delete", "ClientsApi")" />
 
 <div class="container-fluid clients-page">
 
@@ -43,60 +45,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            var clientUrl = $('#clientUrl').val();
-
-            var table = $('#clientTable').DataTable({
-                ajax: {
-                    url: clientUrl,
-                    type: 'GET',
-                    dataSrc: ''
-                },
-                      columns: [
-            { data: 'firstName', title: 'First Name' },
-            { data: 'lastName', title: 'Last Name' },
-            { data: 'email', title: 'Email' },
-            { data: 'phone', title: 'Phone' },
-            { data: 'zodiacSign', title: 'Zodiac Sign' },
-            {
-                data: null,
-                title: 'Actions',
-                render: function (data, type, row) {
-                    return `
-                        <button class="btn btn-sm btn-primary edit-btn" data-id="${row.id}">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-btn" data-id="${row.id}">Delete</button>
-                    `;
-                }
-            }
-        ],
-                 pageLength: 25, // Show 25 rows by default
-                 lengthMenu: [ [10, 25, 50, 100], [10, 25, 50, 100] ], // Optional: dropdown options
-                responsive: true
-            });
-
-            // Search input
-            $('.search-input').on('keyup', function () {
-                table.search(this.value).draw();
-            });
-
-            // Add New Client Button Click
-            $('#CreateUser').on('click', function () {
-                // Open your modal or redirect to create page
-                 window.location.href = $("#createUrl").val();
-            });
-
-            // Edit Button Click
-            $('#clientTable tbody').on('click', '.edit-btn', function () {
-                var id = $(this).data('id');
-                alert('Edit Client ID: ' + id);
-            });
-
-            // Delete Button Click
-            $('#clientTable tbody').on('click', '.delete-btn', function () {
-                var id = $(this).data('id');
-                alert('Delete Client ID: ' + id);
-            });
-        });
+    <script src="~/js/Client/manage.js">      
     </script>
 }

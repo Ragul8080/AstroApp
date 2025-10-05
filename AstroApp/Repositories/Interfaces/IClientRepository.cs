@@ -8,7 +8,7 @@ namespace AstroApp.Repositories.Interfaces
 
         public Task<bool> UpdateClientAsync(ClientModel client);
 
-        public Task<IEnumerable<Client>> GetAllClientsAsync();
+        public Task<IEnumerable<ClientModel>> GetAllClientsAsync();
 
         public Task<IEnumerable<Sates>> GetAllStatesAsync();
 
@@ -16,6 +16,10 @@ namespace AstroApp.Repositories.Interfaces
 
         public Task<IEnumerable<Star>> GetAllStarAsync();
 
-        public Task<ClientModel?> GetClientByIdAsync(int id);
+        public Task<IEnumerable<Gender>> GetAllGenderAsync();
+
+        public Task<ClientModel> GetClientByIdAsync(int id);
+
+        public Task<bool> DeleteClientAsync(int id);
     }
 }

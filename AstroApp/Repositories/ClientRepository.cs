@@ -18,46 +18,68 @@ namespace AstroApp.Repositories
         private IDbConnection CreateConnection()
             => new SqlConnection(_connectionString);
 
-        public async Task<IEnumerable<Client>> GetAllClientsAsync()
+        public async Task<IEnumerable<ClientModel>> GetAllClientsAsync()
         {
-            using var connection = CreateConnection();
-            var sql = @"SELECT [ClientId],
-                   [FirstName],
-                   [LastName],
-                   [Email],
-                   [Phone],
-                   [Gender],
-                   [DateOfBirth] AS BirthDate,
-                   [CreatedAt],
-                   [Status],
-                   [ZodiacSign]
-            FROM [AstroManager].[dbo].[Clients]";
-            return await connection.QueryAsync<Client>(sql);
+            try
+            {
+                using var connection = CreateConnection();
+                var sql = @"
+                            SELECT [ClientId],
+                                   [FirstName],
+                                   [LastName],
+                                   [Email],
+                                   [Phone],
+                                   [Gender],
+                                   [DateOfBirth],
+                                   [CreatedAt],
+                                   [Status],
+                                   [ZodiacSign],
+                                   CONVERT(varchar(8), [BirthTime], 108) AS BirthTime,  -- convert TIME to string HH:mm:ss
+                                   [AddressLine1],
+                                   [AddressLine2],
+                                   [City],
+                                   [State],
+                                   [ZipCode],
+                                   [ZodiacSignId],
+                                   [StarId],
+                                   [Note]
+                            FROM [AstroManager].[dbo].[Clients]";
+
+                return await connection.QueryAsync<ClientModel>(sql);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (use your preferred logging method)
+                Console.Error.WriteLine($"Error fetching clients: {ex.Message}");
+                // Optionally, rethrow or return an empty list
+                return Enumerable.Empty<ClientModel>();
+            }
         }
+
 
         public async Task<ClientModel?> GetClientByIdAsync(int id)
         {
             using var connection = CreateConnection();
-            var sql = @"SELECT [ClientId]
-                          ,[FirstName]
-                          ,[LastName]
-                          ,[Email]
-                          ,[Phone]
-                          ,[Gender]
-                          ,[DateOfBirth]
-                          ,[CreatedAt]
-                          ,[Status]
-                          ,[ZodiacSign]
-                          ,[BirthTime]
-                          ,[AddressLine1]
-                          ,[AddressLine2]
-                          ,[City]
-                          ,[State]
-                          ,[ZipCode]
-                          ,[ZodiacSignId]
-                          ,[StarId]
-                          ,[Note]
-                      FROM [AstroManager].[dbo].[Clients]  where ClientId = @Id";
+            var sql = @"SELECT [ClientId],
+                                   [FirstName],
+                                   [LastName],
+                                   [Email],
+                                   [Phone],
+                                   [Gender],
+                                   [DateOfBirth],
+                                   [CreatedAt],
+                                   [Status],
+                                   [ZodiacSign],
+                                   CONVERT(varchar(8), [BirthTime], 108) AS BirthTime,  -- convert TIME to string HH:mm:ss
+                                   [AddressLine1],
+                                   [AddressLine2],
+                                   [City],
+                                   [State],
+                                   [ZipCode],
+                                   [ZodiacSignId],
+                                   [StarId],
+                                   [Note]
+                            FROM [AstroManager].[dbo].[Clients]  WHERE ClientId = @Id";
             return await connection.QueryFirstOrDefaultAsync<ClientModel>(sql, new { Id = id });
         }
 
@@ -172,6 +194,25 @@ namespace AstroApp.Repositories
                 WHERE ClientId = @ClientId";
             int rows = await conn.ExecuteAsync(sql, client);
             return rows > 0;
+        }
+
+        public async Task<IEnumerable<Gender>> GetAllGenderAsync()
+        {
+            using var connection = CreateConnection();
+            var sql = @"SELECT 
+	                    [Gender_Id] AS GenderId,
+                        [Gender_Name] AS GenderName
+                      FROM [AstroManager].[dbo].[Gender]";
+            return await connection.QueryAsync<Gender>(sql);
+        }
+
+        public async Task<bool> DeleteClientAsync(int id)
+        {
+            using var connection = CreateConnection();
+            var sql = @"DELETE FROM [AstroManager].[dbo].[Clients] WHERE ClientId = @ClientId";
+
+            var rowsAffected = await connection.ExecuteAsync(sql, new { ClientId = id });
+            return rowsAffected > 0;
         }
     }
 }

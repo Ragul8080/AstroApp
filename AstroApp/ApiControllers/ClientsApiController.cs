@@ -19,9 +19,19 @@ namespace AstroApp.ApiControllers
         [HttpGet("GetClients")]
         public async Task<IActionResult> GetClients()
         {
-            var clients = await _clientRepo.GetAllClientsAsync();
-            return Ok(new { data = clients });
+            try
+            {
+                var clients = await _clientRepo.GetAllClientsAsync();
+                return Ok(clients); // ✅ Return JSON array
+            }
+            catch (Exception ex)
+            {
+                // Log exception
+                Console.Error.WriteLine($"Error fetching clients: {ex.Message}");
+                return StatusCode(500, new { message = "Failed to get clients." });
+            }
         }
+
 
         [HttpGet("GetStates")]
         public async Task<IActionResult> GetStates()
@@ -44,6 +54,13 @@ namespace AstroApp.ApiControllers
             return Ok(new { data = star });
         }
 
+        [HttpGet("GetGender")]
+        public async Task<IActionResult> GetGender()
+        {
+            var gender = await _clientRepo.GetAllGenderAsync();
+            return Ok(new { data = gender });
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClientById(int id)
         {
@@ -57,7 +74,14 @@ namespace AstroApp.ApiControllers
         {
             if (client == null)
                 return BadRequest(new { success = false, message = "Invalid client data." });
-
+            TimeSpan? birthTimeSpan = null;
+            if (!string.IsNullOrEmpty(client.BirthTime))
+            {
+                if (TimeSpan.TryParse(client.BirthTime, out var parsedTime))
+                    birthTimeSpan = parsedTime;
+                else
+                    return BadRequest(new { success = false, message = "Invalid birth time format." });
+            }
             bool result = await _clientRepo.CreateClientAsync(client);
 
             if (result)
@@ -65,6 +89,7 @@ namespace AstroApp.ApiControllers
             else
                 return StatusCode(500, new { success = false, message = "Failed to create client." });
         }
+
 
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] ClientModel client)
@@ -82,6 +107,24 @@ namespace AstroApp.ApiControllers
                 return Ok(new { success = true, message = "Client updated successfully." });
             else
                 return StatusCode(500, new { success = false, message = "Failed to update client." });
+        }
+
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id <= 0)
+                return BadRequest(new { success = false, message = "Invalid client ID." });
+
+            var existingClient = await _clientRepo.GetClientByIdAsync(id);
+            if (existingClient == null)
+                return NotFound(new { success = false, message = "Client not found." });
+
+            var result = await _clientRepo.DeleteClientAsync(id); // you need this method in your repo
+
+            if (result)
+                return Ok(new { success = true, message = "Client deleted successfully." });
+            else
+                return StatusCode(500, new { success = false, message = "Failed to delete client." });
         }
     }
 
