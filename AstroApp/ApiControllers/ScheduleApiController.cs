@@ -7,26 +7,28 @@ namespace AstroApp.ApiControllers
     [ApiController]
     public class ScheduleApiController : ControllerBase
     {
-        private readonly IClientRepository _clientRepo;
+        private readonly IScheduleRepository _ScheduleRepo;
 
-        public ScheduleApiController(IClientRepository clientRepo)
+        public ScheduleApiController(IScheduleRepository ScheduleRepo)
         {
-            _clientRepo = clientRepo;
+            _ScheduleRepo = ScheduleRepo;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetClients()
+        [HttpGet("GetAppointments")]
+        public async Task<IActionResult> GetAppointments()
         {
-            var clients = await _clientRepo.GetAllClientsAsync();
-            return Ok(clients);
+            try
+            {
+                var clients = await _ScheduleRepo.GetTodaySchedule();
+                return Ok(clients); // ✅ Return JSON array
+            }
+            catch (Exception ex)
+            {
+                // Log exception
+                Console.Error.WriteLine($"Error fetching clients: {ex.Message}");
+                return StatusCode(500, new { message = "Failed to get clients." });
+            }
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetClient(int id)
-        {
-            var client = await _clientRepo.GetClientByIdAsync(id);
-            if (client == null) return NotFound();
-            return Ok(client);
-        }
     }
 }

@@ -1,8 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "Clients";
+    ViewData["Title"] = "Schedule";
 }
 
-<input type="hidden" id="clientUrl" value="@Url.Action("GetClients", "ScheduleApi")" />
+<input type="hidden" id="clientUrl" value="@Url.Action("GetAppointments", "ScheduleApi")" />
 
 <div class="container-fluid clients-page">
     <div class="row">
@@ -19,13 +19,18 @@
         </div>
         <div class="col-md-4 text-end">
             <button class="purpulbtn" id="CreateUser">
-                <i class="bi bi-plus-lg"></i> Add New Client
+                <i class="bi bi-plus-lg"></i> Add New Schedule
             </button>
         </div>
     </div>
 
-
+    <h6 class="page-subtitle-l">Today Schedule</h6>
     <div id="clientCards" class="row g-4">
+        <!-- Dynamic cards will load here -->
+    </div>
+    <hr class="my-4"> <!-- Separator line -->
+    <h6 class="page-subtitle-l">Upcoming Schedule</h6>
+    <div id="UpclientCards" class="row g-4">
         <!-- Dynamic cards will load here -->
     </div>
 </div>
@@ -35,5 +40,5 @@
 }
 
 @section Scripts {
-    <script src="~/js/Schedule/manage.js"></script>
+	<script src="~/js/Schedule/ScheduleDetail.js"></script>
 }

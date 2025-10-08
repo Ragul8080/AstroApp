@@ -20,6 +20,19 @@
         public int? StarId { get; set; }
         public string Note { get; set; }
 
+        public string ZodiacEng { get; set; }
+        public string ZodiacTamil { get; set; }
+        public string StarEng { get; set; }
+        public string StarTamil { get; set; }
+        public bool appointmentChk { get; set; }
         public string Mode { get; set; } = "Create";
+
+        public List<AppointmentModel> Appointments { get; set; }
+    }
+    public class AppointmentModel
+    {
+        public DateTime AppointmentDate { get; set; }
+        public string SessionMode { get; set; }
+        public string TimeSlot { get; set; }
     }
 }

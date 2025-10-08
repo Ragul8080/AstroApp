@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+    $('#rightSection').hide();
+    let appointmentCount = 1;
     // Load all dropdowns
     getState();
     getZodiacSign();
@@ -28,6 +30,19 @@
     });
 
     // ---------------- Functions ----------------
+
+
+    $('#chkBookAppointment').change(function () {
+        if ($(this).is(':checked')) {
+            $('#rightSection').slideDown(300); // Show with smooth animation
+
+        } else {
+            $('#rightSection').slideUp(300);   // Hide with smooth animation
+            $('#rightButtonContainer #buttonContainer').appendTo('#clientForm');
+        }
+
+    });
+
 
     function getState() {
         $.ajax({
@@ -224,6 +239,22 @@
     }
 
     function getClientData() {
+        let appointments = [];
+        if ($('#chkBookAppointment').is(':checked')) {
+            $('#appointmentsContainer .appointment-form').each(function () {
+                let date = $(this).find('.appointment-date').val();
+                let session = $(this).find('input[type="radio"]:checked').val();
+                let slot = $(this).find('.slot-btn.active-slot').text();
+
+                if (date && session && slot) {
+                    appointments.push({
+                        appointmentDate: date,
+                        sessionMode: session,
+                        timeSlot: slot
+                    });
+                }
+            });
+        }
         return {
             firstName: $('#inputFirstName').val(),
             lastName: $('#inputLastName').val(),
@@ -239,7 +270,10 @@
             zipCode: $('#inputZip').val(),
             zodiacSignId: $('#inputZodiac').val(),
             starId: $('#inputStar').val(),
-            note: $('#inputNote').val()
+            note: $('#inputNote').val(),
+            appointmentChk: $('#chkBookAppointment').is(':checked'),
+            appointments: appointments
+
         };
     }
 
@@ -273,6 +307,4 @@
             }
         });
     }
-
-
 });

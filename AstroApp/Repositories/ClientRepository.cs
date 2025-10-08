@@ -78,8 +78,17 @@ namespace AstroApp.Repositories
                                    [ZipCode],
                                    [ZodiacSignId],
                                    [StarId],
-                                   [Note]
-                            FROM [AstroManager].[dbo].[Clients]  WHERE ClientId = @Id";
+                                   [Note],
+                                   Z.Zodiac_NameEng AS ZodiacEng,
+								   Z.Zodiac_NameTamil AS ZodiacTamil,
+								   S.Star_NameEng AS StarEng,
+								   S.Star_NameTamil AS StarTamil 
+                            FROM [AstroManager].[dbo].[Clients] AS C
+							LEFT JOIN ZodiacSign AS Z
+								ON Z.Zodiac_Id = C.ZodiacSignId
+							LEFT JOIN Star AS S
+							    ON S.Star_Id = C.StarId
+							WHERE C.ClientId = @Id";
             return await connection.QueryFirstOrDefaultAsync<ClientModel>(sql, new { Id = id });
         }
 
@@ -119,56 +128,50 @@ namespace AstroApp.Repositories
             {
                 using (var conn = new SqlConnection(_connectionString))
                 {
-                    string query = @"
-            INSERT INTO Clients(
-                FirstName, 
-                LastName, 
-                Email, 
-                Phone, 
-                Gender, 
-                DateOfBirth, 
-                BirthTime,
-                AddressLine1, 
-                AddressLine2, 
-                City, 
-                State, 
-                ZipCode, 
-                ZodiacSignId, 
-                StarId, 
-                Note, 
-                CreatedAt, 
-                Status)
-            VALUES(
-                @FirstName, 
-                @LastName, 
-                @Email, 
-                @Phone, 
-                @Gender, 
-                @DateOfBirth, 
-                @BirthTime,
-                @AddressLine1,  
-                @AddressLine2, 
-                @City, 
-                @State, 
-                @ZipCode,
-                @ZodiacSignId, 
-                @StarId, 
-                @Note, 
-                GETDATE(), 
-                1)";
+                    await conn.OpenAsync();
+                    using (var tran = conn.BeginTransaction())
+                    {
+                        string clientQuery = @"
+                            INSERT INTO Clients(
+                                FirstName, LastName, Email, Phone, Gender, DateOfBirth, BirthTime,
+                                AddressLine1, AddressLine2, City, State, ZipCode, ZodiacSignId, StarId, Note, CreatedAt, Status,IsAppointment)
+                            VALUES(
+                                @FirstName, @LastName, @Email, @Phone, @Gender, @DateOfBirth, @BirthTime,
+                                @AddressLine1, @AddressLine2, @City, @State, @ZipCode, @ZodiacSignId, @StarId, @Note, GETDATE(), 1, @appointmentChk);
+                            SELECT CAST(SCOPE_IDENTITY() as int)";
 
-                    int rows = await conn.ExecuteAsync(query, client);
+                        int clientId = await conn.QuerySingleAsync<int>(clientQuery, client, tran);
 
-                    return rows > 0;
+                        if (client.Appointments != null && client.Appointments.Count > 0)
+                        {
+                            string apptQuery = @"
+                            INSERT INTO Appointments(ClientId, AppointmentDate, SessionMode, TimeSlot, CreatedAt, Status)
+                            VALUES(@ClientId, @AppointmentDate, @SessionMode, @TimeSlot, GETDATE(), 1)";
+
+                            foreach (var appt in client.Appointments)
+                            {
+                                await conn.ExecuteAsync(apptQuery, new
+                                {
+                                    ClientId = clientId,
+                                    AppointmentDate = appt.AppointmentDate,
+                                    SessionMode = appt.SessionMode,
+                                    TimeSlot = appt.TimeSlot
+                                }, tran);
+                            }
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                // Log the exception here (e.g., to a file, database, or console)
                 Console.WriteLine($"Error creating client: {ex.Message}");
                 return false;
             }
         }
+
 
 
         public async Task<bool> UpdateClientAsync(ClientModel client)

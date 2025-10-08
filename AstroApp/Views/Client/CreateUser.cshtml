@@ -21,115 +21,284 @@
     string buttonClass = Model.Mode == "Edit" ? "btn btn-warning" : "btn btn-primary";
 }
 
-<div class="container mt-4">
+<div class="container ms-xxl-5">
     <div class="row">
         <div class="col-12">
             <h1 class="page-title">@pageTitle</h1>
         </div>
     </div>
 
-    <form id="clientForm">
-        @Html.AntiForgeryToken()
-        <!-- Name Section -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="fieldForinputFirstName" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="inputFirstName" placeholder="Enter first name" value="@Model.FirstName">
-            </div>
-            <div class="col-md-6">
-                <label for="fieldForinputLastName" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="inputLastName" placeholder="Enter last name" value="@Model.LastName">
+    <div class="row g-4">
+        <!-- LEFT SECTION -->
+        <div class="col-lg-8" id="leftSection">
+            <div class="card border-0 shadow-sm bg-white h-100 p-4 rounded-4">
+                <form id="clientForm">
+                    @Html.AntiForgeryToken()
+
+                    <!-- Name Section -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="inputFirstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="inputFirstName" placeholder="Enter first name" value="@Model.FirstName">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputLastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="inputLastName" placeholder="Enter last name" value="@Model.LastName">
+                        </div>
+                    </div>
+
+                    <!-- Zodiac & Star -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="inputZodiac" class="form-label">Zodiac Sign</label>
+                            <select id="inputZodiac" class="form-select w-100"></select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputStar" class="form-label">Star</label>
+                            <select id="inputStar" class="form-select w-100"></select>
+                        </div>
+                    </div>
+
+                    <!-- DOB, Time, Gender -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="inputDOB" class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" id="inputDOB" value="@(Model.DateOfBirth?.ToString("yyyy-MM-dd"))">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputDOT" class="form-label">Birth Time</label>
+                            <input type="time" class="form-control" id="inputDOT" value="@(Model.BirthTime)">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="inputGender" class="form-label">Gender</label>
+                            <select id="inputGender" class="form-select w-100"></select>
+                        </div>
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="inputEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="inputEmail" placeholder="xxxx@gmail.com" value="@Model.Email">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputPhone" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" id="inputPhone" placeholder="Enter phone number" value="@Model.Phone">
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="mb-3">
+                        <label for="inputAddress" class="form-label">Address Line 1</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" value="@Model.AddressLine1">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="inputAddress2" class="form-label">Address Line 2</label>
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" value="@Model.AddressLine2">
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="inputCity" class="form-label">City</label>
+                            <input type="text" class="form-control" id="inputCity" value="@Model.City">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputState" class="form-label">State</label>
+                            <select id="inputState" class="form-select w-100"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputZip" class="form-label">Zip</label>
+                            <input type="text" id="inputZip" class="form-control" value="@Model.ZipCode">
+                        </div>
+                    </div>
+
+                    <!-- Note -->
+                    <div class="mb-3">
+                        <label for="inputNote" class="form-label">Note</label>
+                        <textarea class="form-control" id="inputNote" rows="4" placeholder="Enter your notes here...">@Model.Note</textarea>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               id="chkBookAppointment"
+                               name="appointmentChk"
+                        @(Model.appointmentChk ? "checked=\"checked\"" : "") />
+                        <label class="form-check-label" for="chkBookAppointment">Book Appointment</label>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div id="buttonContainer" class="d-flex justify-content-end mt-3">
+                        <button type="button" class="btn btn-secondary me-2" onclick="history.back()">Cancel</button>
+                        @if (Model.Mode == "Edit")
+                        {
+                            <button type="submit" id="btnUpdate" class="btn btn-warning">Update</button>
+                        }
+                        else
+                        {
+                            <button type="submit" id="btnCreate" class="btn btn-primary">Create</button>
+                        }
+                    </div>
+                </form>
             </div>
         </div>
 
-        <!-- Zodiac & Star -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="fieldForinputZodiac" class="form-label">Zodiac Sign</label>
-                <select id="inputZodiac" class="form-select w-100"></select>
-            </div>
-            <div class="col-md-6">
-                <label for="fieldForinputStar" class="form-label">Star</label>
-                <select id="inputStar" class="form-select w-100"></select>
+        <!-- RIGHT SECTION -->
+        <div class="col-lg-4" id="rightSection" style="display: block;">
+            <div class="card border-0 shadow-sm bg-white h-100 p-4 rounded-4">
+                <h5 class="text-center text-muted mb-4">Appointment Details</h5>
+
+                <!-- Container for multiple appointments -->
+                <div id="appointmentsContainer">
+                    <!-- First Appointment Form (Default, No Close Button) -->
+                    <div class="appointment-form mb-4 p-3 border rounded-3 shadow-sm position-relative">
+                        <!-- Date Picker -->
+                        <input type="date"
+                               class="form-control rounded-3 shadow-sm appointment-date"
+                               value="@(Model.Appointments != null && Model.Appointments.Any()
+                        ? Model.Appointments[0].AppointmentDate.ToString("yyyy-MM-dd")
+                        : string.Empty)" />
+
+                        <!-- Session Mode -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Session Mode</label>
+                            <div class="d-flex gap-3 mt-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sessionMode0" value="Online" checked>
+                                    <label class="form-check-label">Online</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sessionMode0" value="Offline">
+                                    <label class="form-check-label">Offline</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slot Booking -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Select Time Slot</label>
+                            <div class="d-flex flex-wrap gap-2 mt-2 slot-container">
+                                <!-- Slots will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add More Appointment Button -->
+                <div class="d-flex justify-content-center mt-2">
+                    <button id="addAppointmentBtn" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                        <i class="bi bi-plus-circle"></i> Add More Appointment
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- DOB, Time, Gender -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="fieldForinputDOB" class="form-label">Date of Birth</label>
-                <input type="date" class="form-control" id="inputDOB" value="@(Model.DateOfBirth?.ToString("yyyy-MM-dd"))">
-            </div>
-            <div class="col-md-4">
-                <label for="fieldForinputDOT" class="form-label">Birth Time</label>
-                <input type="time" class="form-control" id="inputDOT"
-                       value="@(Model.BirthTime)">
+        <script>
+            let appointmentCount = 1; // for unique radio names
 
-            </div>
-            <div class="col-md-2">
-                <label for="fieldForinputGender" class="form-label">Gender</label>
-                <select id="inputGender" class="form-select w-100"></select>
-            </div>
-        </div>
+            // Function to create time slots
+            function createSlots(slotContainer) {
+              const startHour = 9;
+              const totalSlots = 8;
 
-        <!-- Contact -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="fieldForinputEmail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="xxxx@gmail.com" value="@Model.Email">
-            </div>
-            <div class="col-md-6">
-                <label for="fieldForinputPhone" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="inputPhone" placeholder="Enter phone number" value="@Model.Phone">
-            </div>
-        </div>
+              for (let i = 0; i < totalSlots; i++) {
+                const startTime = `${startHour + i}:00`;
+                const endTime = `${startHour + i + 1}:00`;
 
-        <!-- Address -->
-        <div class="mb-3">
-            <label for="fieldForinputAddress" class="form-label">Address Line 1</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" value="@Model.AddressLine1">
-        </div>
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn btn-outline-primary rounded-pill px-3 py-2 slot-btn';
+                btn.textContent = `${startTime} - ${endTime}`;
+                btn.addEventListener('click', () => {
+                  slotContainer.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('active-slot'));
+                  btn.classList.add('active-slot');
+                });
+                slotContainer.appendChild(btn);
+              }
+            }
 
-        <div class="mb-3">
-            <label for="fieldForinputAddress2" class="form-label">Address Line 2</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" value="@Model.AddressLine2">
-        </div>
+            // Initialize first appointment slots
+            document.addEventListener('DOMContentLoaded', () => {
+              document.querySelectorAll('.slot-container').forEach(container => createSlots(container));
+            });
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="fieldForinputCity" class="form-label">City</label>
-                <input type="text" class="form-control" id="inputCity" value="@Model.City">
-            </div>
-            <div class="col-md-3">
-                <label for="fieldForinputState" class="form-label">State</label>
-                <select id="inputState" class="form-select w-100"></select>
-            </div>
-            <div class="col-md-3">
-                <label for="fieldForinputZip" class="form-label">Zip</label>
-                <input type="text" id="inputZip" class="form-control" value="@Model.ZipCode">
-            </div>
-        </div>
+            // Track selected dates to prevent duplicates
+            function validateDateSelection(input) {
+              const selectedDates = Array.from(document.querySelectorAll('.appointment-date'))
+                .map(i => i.value)
+                .filter(v => v !== '');
+              if (selectedDates.filter(d => d === input.value).length > 1) {
+                alert('You cannot select the same date in multiple appointments.');
+                input.value = ''; // reset duplicate
+              }
+            }
 
-        <!-- Note -->
-        <div class="mb-3">
-            <label for="fieldForinputNote" class="form-label">Note</label>
-            <textarea class="form-control" id="inputNote" rows="4" placeholder="Enter your notes here...">@Model.Note</textarea>
-        </div>
+            // Add event listener to date inputs
+            document.addEventListener('input', (e) => {
+              if (e.target.classList.contains('appointment-date')) {
+                validateDateSelection(e.target);
+              }
+            });
 
-        <!-- Buttons -->
-        <div class="d-flex justify-content-end mt-3">
-            <button type="button" class="btn btn-secondary me-2" onclick="history.back()">Cancel</button>
-                    @if (Model.Mode == "Edit")
-                    {
-                    <button type="submit" id="btnUpdate" class="btn btn-warning">Update</button>
-                    }
-                    else
-                    {
-                    <button type="submit" id="btnCreate" class="btn btn-primary">Create</button>
-                    }
-        </div>
-    </form>
-</div>
+            // Add more appointment functionality
+            document.getElementById('addAppointmentBtn').addEventListener('click', () => {
+              const container = document.getElementById('appointmentsContainer');
+              const original = container.querySelector('.appointment-form');
+              const clone = original.cloneNode(true);
+
+              // Clear input values
+              clone.querySelectorAll('input[type="date"]').forEach(input => input.value = '');
+              clone.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = radio.value === 'Online';
+              });
+
+              // Update radio names to avoid conflicts
+              clone.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.name = `sessionMode${appointmentCount}`;
+              });
+
+              // Reset slots
+              const slotContainer = clone.querySelector('.slot-container');
+              slotContainer.innerHTML = '';
+              createSlots(slotContainer);
+
+              // Add close button for new clone
+              const closeBtn = document.createElement('button');
+              closeBtn.type = 'button';
+              closeBtn.className = 'btn-close position-absolute top-0 end-0 m-2 remove-card-btn';
+              closeBtn.setAttribute('aria-label', 'Close');
+              closeBtn.addEventListener('click', () => clone.remove());
+              clone.classList.add('position-relative');
+              clone.prepend(closeBtn);
+
+              container.appendChild(clone);
+              appointmentCount++;
+            });
+        </script>
+
+        <style>
+            .slot-btn {
+                flex: 1 0 48%;
+                transition: all 0.2s ease-in-out;
+                margin-bottom: 6px;
+            }
+
+                .slot-btn:hover {
+                    background-color: #0d6efd;
+                    color: white;
+                    transform: scale(1.03);
+                }
+
+            .active-slot {
+                background-color: #0d6efd !important;
+                color: white !important;
+                border-color: #0d6efd !important;
+            }
+        </style>
+
+
+    
 
 
 @section Styles {

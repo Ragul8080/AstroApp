@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     var clientUrl = $('#clientUrl').val();
     var editUrl = $('#editUrl').val();
+    var detailUrl = $('#detailUrl').val();
     var deleteUrl = $('#deleteUrl').val();
 
     var table = $('#clientTable').DataTable({
@@ -20,8 +21,7 @@
                 title: 'Actions',
                 render: function (data, type, row) {
                     return `
-                                <button class="btn btn-sm btn-primary edit-btn">Edit</button>
-                                <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                                <button class="btn btn-sm btn-primary details-btn">Details</button>
                             `;
                 }
             }
@@ -41,25 +41,14 @@
         window.location.href = $("#createUrl").val();
     });
 
-    // Edit Button 
-    $('#clientTable tbody').on('click', '.edit-btn', function () {
+    $('#clientTable tbody').on('click', '.details-btn', function () {
         var rowData = table.row($(this).closest('tr')).data();
         var id = rowData.clientId; // Get clientId from the hidden column
         if (id) {
-            window.location.href = editUrl + '/' + id;
+            window.location.href = detailUrl + '/' + id;
         } else {
             console.error('Client ID not found for this row.');
         }
     });
 
-    // Delete Button
-    $('#clientTable tbody').on('click', '.delete-btn', function () {
-        var rowData = table.row($(this).closest('tr')).data();
-        var id = rowData.clientId;
-        if (id) {
-            window.location.href = deleteUrl + '/' + id;
-        } else {
-            console.error('Client ID not found for this row.');
-        }
-    });
 });

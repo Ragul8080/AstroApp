@@ -33,9 +33,17 @@ namespace AstroApp.Controllers
             {
                 return NotFound();
             }
-
-            client.Mode = "Edit"; // Set mode to Edit
-            return View("CreateUser", client); // Use the same CreateUser view
+            client.Mode = "Edit";
+            return View("CreateUser", client);
+        }
+        public async Task<IActionResult> UserDetail(int id)
+        {
+            var client = await _clientRepo.GetClientByIdAsync(id);
+            if (client == null)
+            {
+                return NotFound();
+            }
+            return View(client);
         }
     }
 

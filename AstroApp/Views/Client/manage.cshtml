@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Clients";
 }
-
+<input type="hidden" id="detailUrl" value="@Url.Action("UserDetail", "Client")" />
 <input type="hidden" id="clientUrl" value="@Url.Action("GetClients", "ClientsApi")" />
 <input type="hidden" id="createUrl" value="@Url.Action("CreateUser", "Client")" />
 <input type="hidden" id="editUrl" value="@Url.Action("EditUser", "Client")" />

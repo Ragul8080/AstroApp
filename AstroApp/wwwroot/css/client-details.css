@@ -1,0 +1,85 @@
+﻿/* ============================= */
+/* CLIENT DETAILS PAGE           */
+/* ============================= */
+.cd-client-details-page {
+    padding: 30px;
+}
+
+.cd-client-card {
+    background-color: var(--card-bg);
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.cd-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    color: #fff;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.cd-status-badge {
+    background-color: #e5e7eb;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.cd-info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+.cd-zodiac {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent-color);
+    margin-left: 8px;
+}
+
+.cd-notes {
+    background-color: #f9fafb;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.cd-appointments {
+    background-color: var(--card-bg);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.cd-appointment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+}
+
+.cd-btn-violet {
+    background-color: var(--btn-bg);
+    color: #fff;
+    border-radius: 8px;
+    border: none;
+    padding: 10px 16px;
+    transition: 0.3s ease;
+}
+
+    .cd-btn-violet:hover {
+        background-color: var(--btn-hover-bg);
+    }

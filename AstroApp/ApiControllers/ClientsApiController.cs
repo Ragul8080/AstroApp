@@ -7,7 +7,7 @@ namespace AstroApp.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientsApiController : ControllerBase
+    public class ClientsApiController : ControllerBase  
     {
         private readonly IClientRepository _clientRepo;
 

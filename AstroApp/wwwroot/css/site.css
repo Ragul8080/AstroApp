@@ -211,11 +211,22 @@ footer {
     font-weight: 700;
     color: var(--accent-color);
 }
+.pagetitle-all {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
 
 .page-subtitle {
     font-size: 1.1rem;
     color: #555;
     margin-bottom: 20px;
+}
+
+.page-subtitle-l {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--accent-color);
 }
 
 .search-box .search-input {
@@ -479,4 +490,95 @@ a {
     display: block;
     margin-top: 8px;
     color: #6366f1;
+}
+
+/* ============================= */
+/*       CLIENT DETAILS PAGE     */
+/* ============================= */
+.client-details-page h3,
+.client-details-page h4,
+.client-details-page h5 {
+    color: #5b21b6;
+    font-weight: 600;
+}
+
+.client-card,
+.appointments {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 25px;
+}
+
+    .client-card .avatar {
+        background-color: #7c3aed;
+        color: #fff;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        margin-right: 15px;
+    }
+
+.status-badge {
+    background: #ede9fe;
+    color: #6d28d9;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+}
+
+.info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.notes {
+    background: #f3f1fe;
+    padding: 10px;
+    border-radius: 8px;
+    color: #555;
+}
+
+.appointment-item {
+    display: flex;
+    justify-content: space-between;
+    background: #fafafa;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.btn-violet {
+    background-color: #7c3aed;
+    color: white;
+    border-radius: 10px;
+    transition: 0.3s;
+    border: none;
+}
+
+    .btn-violet:hover {
+        background-color: #5b21b6;
+    }
+
+.zodiac {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent-color);
+    margin-left: 8px;
+}
+
+.last-visit {
+    display: block;
+    margin-top: 8px;
+    color: #6366f1;
+}
+
+/* Optional: keep appointment list style */
+.appointment-list {
+    margin-top: 10px;
 }
